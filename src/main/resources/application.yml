@@ -1,0 +1,55 @@
+# Настройка порта для сервера
+server:
+  port: 8080
+
+# Настройка уровней логирования
+logging:
+  level:
+    root: INFO
+    org.springframework.web: WARN
+    edu.rd.spcity: DEBUG
+
+spring:
+  # Конфиги профилирования
+  profiles:
+    active: test
+  # Конфиги для БД
+  #  datasource:
+  #    driver-class-name: org.postgresql.Driver
+  #    url: jdbc:postgresql://localhost:5432/city?currentSchema=springcity
+  #    username: postgres
+  #    password: password
+  # Конфиги для миграции
+  liquibase:
+    url: jdbc:postgresql://localhost:5432/city?currentSchema=springcity
+    user: postgres
+    password: password
+    change-log: classpath:db/changelog/changelog-master.xml
+  r2dbc:
+    url: r2dbc:postgresql://localhost:5432/city?currentSchema=springcity
+    username: postgres
+    password: password
+
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+
+  jpa:
+    properties:
+      # Конфиги для хибы
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQL95Dialect
+        ddl.auto: none
+        show_sql: true
+        format_sql: false
+        # Конфиги для кеширования второго уровня
+        cache:
+          use_second_level_cache: true
+          use_query_cache: true
+          region:
+            factory_class: org.hibernate.cache.jcache.JCacheRegionFactory
+
+# Версия API приложения
+url:
+  api:
+    version: v0
